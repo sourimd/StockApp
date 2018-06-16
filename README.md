@@ -1,6 +1,9 @@
 # StockResearchApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.1.
+I created this application to support my research on stock price movements and help me design my portfolio.
+This is the public version of the application. The private contains sensitive financial information, hence 
+has not been made public.
 
 ## Development server
 
