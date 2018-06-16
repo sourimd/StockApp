@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { StockChartComponent } from './stock-chart/stock-chart.component';
+import { GetNewsService } from './Services/GetNewsServices/get-news-service.service';
 import { HttpModule } from '@angular/http';
 
 @NgModule({
@@ -15,7 +16,9 @@ import { HttpModule } from '@angular/http';
     BrowserModule,
     HttpModule
   ],
-  providers: [],
+  providers: [
+    GetNewsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

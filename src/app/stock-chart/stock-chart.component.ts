@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
+import { GetNewsService } from '../Services/GetNewsServices/get-news-service.service';
 
 @Component({
   selector: 'app-stock-chart',
@@ -17,11 +18,12 @@ export class StockChartComponent implements OnInit {
     largestTrades: any[];
     private selectedTicker:string;
     apiKey:string = 'I3BBLARXL8KMV9PR';
-  	constructor( private http: Http){
+  	constructor( private http: Http, private getNewsService:GetNewsService){
   		
   	}
 
   	ngOnInit() {
+        // this.getNewsService.getNews('aapl');
   	}
 
   	onTickerClick($event,tickr:string){
@@ -233,11 +235,12 @@ export class StockChartComponent implements OnInit {
     }
 
     getNews(){
-      	let url = 'https://api.iextrading.com/1.0/stock/'+this.selectedTicker+'/news/last/50';
-      	this.http.get(url)
+      	// let url = 'https://api.iextrading.com/1.0/stock/'+this.selectedTicker+'/news/last/50';
+      	this.getNewsService.getNews(this.selectedTicker)
             .subscribe( response =>{
               this.news = response.json();
             });
+
     }
 
     getKeyStats(){
