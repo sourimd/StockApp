@@ -1,10 +1,16 @@
+// Angular core utilities
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
 
+// Components
 import { AppComponent } from './app.component';
 import { StockChartComponent } from './stock-chart/stock-chart.component';
+
+// Services
 import { GetNewsService } from './Services/GetNewsServices/get-news-service.service';
-import { HttpModule } from '@angular/http';
+import { GetKeyStatsService } from './Services/GetKeyStatsService/get-key-stats-service.service';
+import { GetCurrentStockPriceService } from './Services/GetCurrentStockPrice/get-current-stock-price.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +23,9 @@ import { HttpModule } from '@angular/http';
     HttpModule
   ],
   providers: [
-    GetNewsService
+    GetNewsService,
+    GetKeyStatsService,
+    GetCurrentStockPriceService
   ],
   bootstrap: [AppComponent]
 })

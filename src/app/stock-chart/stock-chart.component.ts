@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
+
+// Services
 import { GetNewsService } from '../Services/GetNewsServices/get-news-service.service';
+import { GetKeyStatsService } from '../Services/GetKeyStatsService/get-key-stats-service.service';
+import { GetCurrentStockPriceService } from '../Services/GetCurrentStockPrice/get-current-stock-price.service';
 
 @Component({
   selector: 'app-stock-chart',
@@ -18,7 +22,10 @@ export class StockChartComponent implements OnInit {
     largestTrades: any[];
     private selectedTicker:string;
     apiKey:string = 'I3BBLARXL8KMV9PR';
-  	constructor( private http: Http, private getNewsService:GetNewsService){
+  	
+    constructor( private http: Http, private getNewsService:GetNewsService,
+                private getKeyStatsService:GetKeyStatsService,
+                private getCurrentStockPriceService: GetCurrentStockPriceService){
   		
   	}
 
@@ -235,27 +242,49 @@ export class StockChartComponent implements OnInit {
     }
 
     getNews(){
-      	// let url = 'https://api.iextrading.com/1.0/stock/'+this.selectedTicker+'/news/last/50';
       	this.getNewsService.getNews(this.selectedTicker)
             .subscribe( response =>{
               this.news = response.json();
+            },
+            (error:Response) => {
+              if( error.status === 404 ){
+                console.log("news of selected ticker not found");
+              }
+              else{
+                console.log("error in fetching news of " + this.selectedTicker );
+              }
             });
 
     }
 
     getKeyStats(){
-      	let url = 'https://api.iextrading.com/1.0/stock/'+this.selectedTicker+'/stats';
-      	this.http.get(url)
+      	this.getKeyStatsService.getKeyStats(this.selectedTicker)
                 .subscribe( response =>{
                   this.keyStats = response.json();
+                },
+                (error:Response) => {
+                  if( error.status === 404){
+                    console.log("key stats of the selected ticker not found")
+                  }
+                  else{
+                    console.log("error in fetching key stats of " + this.selectedTicker);
+                  }
                 });
     }
 
     getCurrentStockPrice(){
-      	let url = 'https://api.iextrading.com/1.0/stock/' + this.selectedTicker + '/price';
-      	this.http.get(url)
+      	this.getCurrentStockPriceService.getStockPrice(this.selectedTicker)
           .subscribe( response =>{
             this.currentPrice = response.json();
+          },
+          (error:Response) => {
+            if( error.status === 404 ){
+              console.log( "current stock price not found");
+            }
+            else{
+              console.log("Error in fetching stock price");
+            }
+            
           })
     }
 
